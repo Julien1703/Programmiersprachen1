@@ -1,0 +1,17 @@
+.bar-container {
+    display: flex;
+    align-items: flex-end;
+    height: 400px;
+    width: 800px;
+    margin: 50px auto;
+  }
+  
+  .bar {
+    height: 0;
+    width: 30px;
+    margin-right: 5px;
+    background-color: rgb(21, 255, 13);
+    border-radius: 5px;
+  }
+  
+  
