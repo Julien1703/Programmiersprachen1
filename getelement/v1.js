@@ -3,3 +3,4 @@ function changeColor(newColor) {
     elem.style.color = newColor;
   }
   
+  
