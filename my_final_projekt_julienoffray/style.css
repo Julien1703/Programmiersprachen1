@@ -31,9 +31,6 @@ body {
 
 }
 
-.card.turn {
-  transform: rotateY(180deg);
-}
 
 .card.back {
   background-color: #333;
