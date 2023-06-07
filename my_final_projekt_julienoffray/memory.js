@@ -82,7 +82,7 @@ window.onload = (event) => {
           anzahlKartenPaare = 25;
           anzahlColumns = 7;
           break;
-        case '35 Paare':            //Bei 35 Paare sind ein paar Paare undefined !!!!!!!!!!!!!!!!!!!!
+        case '35 Paare':            //Bei 35 Paare sind ein paar Paare undefined aber dass klärt sich wenn ich den arry größer mache und bild  einfüge !!!!!!!!!!!!!!!!!!!!
           anzahlKartenPaare = 35;
           anzahlColumns = 8;
           break;
@@ -117,6 +117,7 @@ window.onload = (event) => {
 //karte wird umgedreht 
 function turnCard(card) {
   card.classList.remove('back');
+  card.classList.add('flip');
   const wert = card.dataset.wert;
   card.textContent = wert;
 }
