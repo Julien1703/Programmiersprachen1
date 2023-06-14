@@ -43,11 +43,9 @@ background-position: center;
   border: 2px solid transparent;
 }
 
-.card.back {
+/*.card.back {
   /* background-color: #333; */
-  /* color: #f2f2f2; */
-}
-
+  /* color: #f2f2f2;} */
 
 .card.matched {
   border: 2px solid green;
