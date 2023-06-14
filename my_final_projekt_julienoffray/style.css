@@ -1,5 +1,16 @@
 body {
-  margin: 0;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  background-color: rgb(48, 180, 233);
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
 }
 
 .container {
@@ -16,7 +27,9 @@ body {
 }
 
 .card {
-  background-color: #bbee5e;
+  background-size: cover;  
+background-position: center;
+  background-color: #f2f2f2;
   border-radius: 5px;
   cursor: pointer;
   display: flex;
@@ -28,14 +41,13 @@ body {
   width: 60px;
   height: 60px;
   border: 2px solid transparent;
-
 }
-
 
 .card.back {
-  background-color: #333;
-  color: #f2f2f2;
+  /* background-color: #333; */
+  /* color: #f2f2f2; */
 }
+
 
 .card.matched {
   border: 2px solid green;
@@ -59,6 +71,71 @@ body {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 7px 7px;
   cursor: pointer;
+}
+
+.spieler {
+  background-color: #5938e9;
+  color: white;
+  padding: 15px 32px;
+  margin: 4px 2px;
+  display: inline-block;
+  border-radius: 20px;
+}
+
+.aktuell {
+  background-color: #2f32dd;
+  color: white;
+  padding: 10px 22px;
+  margin: 20px 2px;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+}
+
+footer a {
+  background-color: #000000;
+  color: rgb(245, 242, 242);
+  padding: 5px 22px;
+  font-size: 13px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.flip {
+  animation: flip-animation 0.5s;
+}
+
+@keyframes flip-animation {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 568px) {
+  .card {
+    width: 20px;
+    height: 20px;
+    font-size: 8px;
+  }
+  #card-grid {
+    display: grid;
+    grid-template-columns: repeat(2fr,1fr);
+    gap: 10px;
+  }
 }

@@ -16,16 +16,18 @@
     <h1>Memory</h1>
 
     <p>(Unvollständige Demo basierend auf dem Code von Julien Offray)</p>
+    
+    <div id="timer"></div>
 
     <button class="button" onclick="startGame(15)">15 Paare</button>
     <button class="button" onclick="startGame(20)">20 Paare</button>
     <button class="button" onclick="startGame(25)">25 Paare</button>
     <button class="button" onclick="startGame(35)">35 Paare</button>
 
-    <div>Aktueller Spieler: <span id="currentPlayer"></span></div>
+    <div class="aktuell">Aktueller Spieler: <span id="currentPlayer"></span></div>
 
-    <div>Karten von Player 1: <span id="cardsPlayer1"></span></div>
-    <div>Karten von Player 2: <span id="cardsPlayer2"></span></div>
+    <div class="spieler">Karten von Player 1: <span id="cardsPlayer1"></span></div>
+    <div class="spieler">Karten von Player 2: <span id="cardsPlayer2"></span></div>
 
     <div class="container">
       <div id="card-grid"></div>

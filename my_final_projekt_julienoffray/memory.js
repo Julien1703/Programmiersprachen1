@@ -1,188 +1,212 @@
-const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+const alphabet = [
+  "france.png",
+  "mexico.png",
+  "netherlands.png",
+  "italy.png",
+  "indonesia.png",
+  "india.png",
+  "germany.png",
+  "brazil.png",
+  "australlia.png",
+  "albania.png",
+  "afghanistan.png",
+];
 const kartenElemente = [];
 
 let currentPlayer = 1;
-let cardsPlayer1 = []; //erstellt ein leeres Array das die karten speichert welche der player gefunden hat 
-let cardsPlayer2 = []; 
+let cardsPlayer1 = [];
+let cardsPlayer2 = [];
 
-let selectedCard1 = null; // weist der variable selectedCard1 den wert null um die die erste karte zu speichern 
-let selectedCard2 = null; 
+let selectedCard1 = null;
+let selectedCard2 = null;
 
-// mischt karten
+let timer;
+let timerSeconds = 0;
+let anzahlKartenPaare = 4;
+let anzahlColumns = 2;
+
 function getKarten() {
-  let array = []; //dieser array erhählt die karten 
-  for (let i = 0; i < anzahlKartenPaare; i++) {   //die schleife läuft so lange durch wie die größe der anzahlKartenPaare ist 
-    array.push(alphabet[i]); 
-    array.push(alphabet[i]); // schreibt den buchstaben doppelt in den array da man für ein paar zwei mal den gleichen brauch
-    console.log(array);
-    console.log(alphabet);
+  let array = [];
+  for (let i = 0; i < anzahlKartenPaare; i++) {
+      array.push(alphabet[i]);
+      array.push(alphabet[i]);
   }
 
-  let currentIndex = array.length; //erstellt Variable für den aktuellen Index
+  let currentIndex = array.length;
 
-  while (currentIndex !== 0) { //Die Schleife läuft so lange bis sie den wert null erreicht 
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
+  while (currentIndex !== 0) {
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
 
-    temporaryValue = array[currentIndex]; // der Wert im Array und der Postition currentIndex  wird in temporaryValue gespeichert 
-    array[currentIndex] = array[randomIndex]; //Der wert von cuurrentIndex wird mit dem randomIndex getauscht um um die Karte eine Random Position zu platzieren 
-    array[randomIndex] = temporaryValue;  //Setzt den zufälligen Wert an die vorherige Position des aktuellen Werts
+      let temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
   }
   return array;
 }
 
-// erstellt Memory Raster 
 function erstelleKartenRaster() {
-  const kartenRaster = document.getElementById('card-grid'); /// Holt das Spielfeld mit der ID 'card-grid'
-  const gemischteKarten = getKarten(); //ruft die Funktion getkarten auf um die karten zu mischen 
-  console.log(typeof gemischteKarten);
-  
+  const kartenRaster = document.getElementById('card-grid');
+  const gemischteKarten = getKarten();
+
   while (kartenRaster.firstChild) {
-    kartenRaster.removeChild(kartenRaster.firstChild);
+      kartenRaster.removeChild(kartenRaster.firstChild);
   }
 
   kartenElemente.length = 0;
-  
-  //befüllt das Memory Raster
+
   for (let i = 0; i < gemischteKarten.length; i++) {
-    const karte = document.createElement('div'); // ertsellt ein div für eine Karte 
-    karte.classList.add('card', 'back'); //füge der Klasse card und back zu 
-    karte.dataset.wert = gemischteKarten[i]; //setzt den Wert data-wert Attribut
-    kartenRaster.appendChild(karte); //fügt  zum Spielfeld das kartenElement zu
-    kartenElemente.push(karte);
+      const karte = document.createElement('div');
+      karte.classList.add('card', 'back');
+      karte.dataset.wert = gemischteKarten[i];  // Jetzt ist das der Pfad zum Bild
+      kartenRaster.appendChild(karte);
+      kartenElemente.push(karte);
   }
+
 }
 
-//starte Game
+function startTimer() {
+  timer = setInterval(() => {
+      timerSeconds++;
+      document.querySelector('#timer').textContent = getFormattedTime(timerSeconds);
+  }, 1000);
+}
+
 function startGame() {
-  // Setze die Spieler- und Kartenvariablen zurück
   currentPlayer = 1;
   cardsPlayer1 = [];
   cardsPlayer2 = [];
   selectedCard1 = null;
   selectedCard2 = null;
-  erstelleKartenRaster(); //erstellt das KarteRaster
+  timerSeconds = 0;
+  erstelleKartenRaster();
+  startTimer();
 }
 
-// Initialisierung des Spiels und endscheidung wie viel paare der user haben will 
+function getFormattedTime(seconds) {
+  const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
+  const remainingSeconds = (seconds % 60).toString().padStart(2, '0');
+  return `${minutes}:${remainingSeconds}`;
+}
+
 window.onload = (event) => {
-  const buttons = document.querySelectorAll('button'); // wählt alle Button-elemente aus 
+  const buttons = document.querySelectorAll('button');
   buttons.forEach(function (button) {
-    button.addEventListener('click', function () {
-      switch (button.textContent) {
-        case '15 Paare':
-          anzahlKartenPaare = 5;
-          anzahlColumns = 5;
-          break;
-        case '20 Paare':
-          anzahlKartenPaare = 20;
-          anzahlColumns = 6;
-          break;
-        case '25 Paare':
-          anzahlKartenPaare = 25;
-          anzahlColumns = 7;
-          break;
-        case '35 Paare':            //Bei 35 Paare sind ein paar Paare undefined aber dass klärt sich wenn ich den arry größer mache und bild  einfügen!!!!!!!!!!!!!!!!!!!!
-          anzahlKartenPaare = 35;
-          anzahlColumns = 8;
-          break;
-        default:
-          anzahlKartenPaare = 4;
-          anzahlColumns = 2;
-      }
-
-      startGame(); //ruft die funltion startgame auf 
-
-      document.querySelector('#currentPlayer').textContent = currentPlayer; //Aktuelleisiere den aktuellen spiel
-      document.querySelector('#card-grid').style.gridTemplateColumns = `repeat(${anzahlColumns},1fr)`; //Setzt die Anzahl der Spalten 
-
-      kartenElemente.forEach(function (karte) {
-        karte.addEventListener('click', function () { //Setzt ein eventlistener click auf die karten hinzu damit man sie klicken kann
-          if (this.classList.contains('back')) {
-            if (!selectedCard1) { //schau ob man eine Karte ausgehählt hat 
-              selectedCard1 = this; //setzt die ausgewählte Karte als selectedCard1 an 
-              turnCard(selectedCard1); //ruft fie funcztion turn card auf um dioe karte zu drehen 
-            } else if (!selectedCard2) { 
-              selectedCard2 = this; 
-              turnCard(selectedCard2); 
-              checkWin();  //ruft die function checkWin auf 
-            }
+      button.addEventListener('click', function () {
+          switch (button.textContent) {
+              case '15 Paare':
+                  anzahlKartenPaare = 2;
+                  anzahlColumns = 5;
+                  break;
+              case '20 Paare':
+                  anzahlKartenPaare = 20;
+                  anzahlColumns = 6;
+                  break;
+              case '25 Paare':
+                  anzahlKartenPaare = 25;
+                  anzahlColumns = 7;
+                  break;
+              case '35 Paare':
+                  anzahlKartenPaare = 35;
+                  anzahlColumns = 8;
+                  break;
+              default:
+                  anzahlKartenPaare = 4;
+                  anzahlColumns = 2;
           }
-        });
+
+          startGame();
+
+          document.querySelector('#currentPlayer').textContent = currentPlayer;
+          document.querySelector('#timer').textContent = getFormattedTime(timerSeconds);
+          document.querySelector('#card-grid').style.gridTemplateColumns = `repeat(${anzahlColumns},1fr)`;
+
+          kartenElemente.forEach(function (karte) {
+              karte.addEventListener('click', function () {
+                  if (this.classList.contains('back')) {
+                      if (!selectedCard1) {
+                          selectedCard1 = this;
+                          turnCard(selectedCard1);
+                      } else if (!selectedCard2) {
+                          selectedCard2 = this;
+                          turnCard(selectedCard2);
+                          checkWin();
+                      }
+                  }
+              });
+          });
       });
-    });
   });
 }
 
-//karte wird umgedreht 
 function turnCard(card) {
-  card.classList.remove('back');
   const wert = card.dataset.wert;
-  card.textContent = wert;
+  card.style.backgroundImage = `url(${wert})`;
+  card.classList.remove('back');
+  //   const wert = card.dataset.wert;//
+  //   card.textContent = wert;
+
+  card.classList.add('flip');
+  card.addEventListener('animationend', function () {
+      card.classList.remove('flip');
+  });
 }
 
-//Es wird geschut ob ob es ein match ist oder keins  wenn ja wird unsichtbar gemacht 
 function checkWin() {
   if (selectedCard1.dataset.wert === selectedCard2.dataset.wert) {
-    selectedCard1.classList.add('matched');
-    selectedCard2.classList.add('matched');
-    if (currentPlayer === 1) {
-      cardsPlayer1.push(selectedCard1.dataset.wert);
-      document.querySelector('#cardsPlayer1').innerHTML = cardsPlayer1.join(", ");
-    } else {
-      cardsPlayer2.push(selectedCard1.dataset.wert);
-      document.querySelector('#cardsPlayer2').innerHTML = cardsPlayer2.join(", ");
-    }
-    setTimeout(() => {
-      selectedCard1.classList.add('invisible');
-      selectedCard2.classList.add('invisible');
-      selectedCard1.classList.remove('matched');
-      selectedCard2.classList.remove('matched');
-      selectedCard1 = null;
-      selectedCard2 = null;
-      checkGameEnd();
-    }, 1000);
-  } else {
-    selectedCard1.classList.add('nomatch');
-    selectedCard2.classList.add('nomatch');
-    setTimeout(() => {
-      selectedCard1.classList.add('back');
-      selectedCard2.classList.add('back');
-      selectedCard1.classList.remove('nomatch');
-      selectedCard2.classList.remove('nomatch');
-      selectedCard1.textContent = '';
-      selectedCard2.textContent = '';
+      selectedCard1.classList.add('matched');
+      selectedCard2.classList.add('matched');
+      if (currentPlayer === 1) {
+          cardsPlayer1.push(selectedCard1.dataset.wert);
+          document.querySelector('#cardsPlayer1').innerHTML = cardsPlayer1.join(", ");
+      } else {
+          cardsPlayer2.push(selectedCard1.dataset.wert);
+          document.querySelector('#cardsPlayer2').innerHTML = cardsPlayer2.join(", ");
+      }
       selectedCard1 = null;
       selectedCard2 = null;
       switchPlayer();
-    }, 1000);
+  } else {
+      setTimeout(() => {
+          selectedCard1.style.backgroundImage = '';
+          selectedCard1.classList.add('back');
+          selectedCard2.style.backgroundImage = '';
+          selectedCard2.classList.add('back');
+          selectedCard1.classList.remove('nomatch');
+          selectedCard2.classList.remove('nomatch');
+          selectedCard1 = null;
+          selectedCard2 = null;
+          switchPlayer();
+      }, 1000);
   }
+  checkGameEnd();
 }
 
-//Der spiler wird gewechselt
+
 function switchPlayer() {
   if (currentPlayer === 1) {
-    currentPlayer = 2;
+      currentPlayer = 2;
   } else {
-    currentPlayer = 1;
+      currentPlayer = 1;
   }
   document.querySelector('#currentPlayer').textContent = currentPlayer;
 }
 
-//Schaut wer gewonnen hat !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function checkGameEnd() {
-  if (cardsPlayer1.length + cardsPlayer2.length === anzahlKartenPaare) {
-    let winner = '';
-    console.log("pouiasdehbfV");
-    if (cardsPlayer1.length > cardsPlayer2.length) {
-      winner = 'Spieler 1';
-      
-    } else if (cardsPlayer2.length > cardsPlayer1.length) {
-      winner = 'Spieler 2';
-    } else {
-      winner = 'Unentschieden';
-    }
-    alert(`Spiel beendet! Gewinner: ${winner}`);
-    gameEnded = true;
+  if (cardsPlayer1.length + cardsPlayer2.length === anzahlKartenPaare * 2) {
+      clearInterval(timer);
+      let winner = '';
+      if (cardsPlayer1.length > cardsPlayer2.length) {
+          winner = 'Spieler 1';
+      } else if (cardsPlayer2.length > cardsPlayer1.length) {
+          winner = 'Spieler 2';
+      } else {
+          winner = 'Unentschieden';
+      }
+      const spielzeit = getFormattedTime(timerSeconds);
+      alert(`Spiel beendet! Gewinner: ${winner}. In einer Zeit von ${spielzeit}`);
+      gameEnded = true;
   }
+
+
 }
