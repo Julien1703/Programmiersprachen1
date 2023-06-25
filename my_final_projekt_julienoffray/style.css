@@ -4,7 +4,7 @@ body {
   display: grid;
   justify-content: center;
   align-items: center;
-  background-color: rgb(71, 71, 71);
+  background-color: rgba(55, 7, 84, 0.713);
   margin: 0;
   padding: 0;
 }
