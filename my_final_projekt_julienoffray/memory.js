@@ -55,23 +55,23 @@ window.onload = (event) => {
     button.addEventListener('click', function () {
       switch (button.textContent) {
         case '15 Paare':           // Wenn der Button "15 Paare" geklickt wurde
-          anzahlKartenPaare = 15;   // Anzahl der Kartenpaare auf 5 setzen
-          anzahlColumns = 9;       // Anzahl der Spalten auf 5 setzen
+          anzahlKartenPaare = 15;   // Anzahl der Kartenpaare 
+          //anzahlColumns = 9;       // Anzahl der karten pro spalte 
           break;
 
         case '20 Paare':
           anzahlKartenPaare = 20;
-          anzahlColumns = 10;
+          //anzahlColumns = 8;
           break;
 
         case '25 Paare':
           anzahlKartenPaare = 25;
-          anzahlColumns = 11;
+          //anzahlColumns = 11;
           break;
 
         case '35 Paare':
           anzahlKartenPaare = 35;
-          anzahlColumns = 12;
+          //anzahlColumns = 12;
           break;
       }
 
@@ -80,7 +80,7 @@ window.onload = (event) => {
       // Die Textinhalte der Elemente aktualisieren
       document.querySelector('#currentPlayer').textContent = currentPlayer; // Aktualisiert den Textinhalt des Elements mit der ID 'currentPlayer' mit dem aktuellen Spieler
       document.querySelector('#timer').textContent = getFormattedTime(timerSeconds); // Aktualisiert den Textinhalt des Elements mit der ID 'timer' mit der formatierten Spielzeit
-      document.querySelector('#card-grid').style.gridTemplateColumns = `repeat(${anzahlColumns},1fr)`; // Ändert die Anzahl der Spalten im Kartengitter basierend auf der Anzahl der Spalten (anzahlColumns)
+      document.querySelector('#card-grid');
 
       kartenElemente.forEach(function (karte) {
         karte.addEventListener('click', function () {
@@ -175,69 +175,76 @@ function turnCard(card) {
   card.classList.remove('back'); // Entfernt die Klasse 'back' von der Karte
   card.classList.add('flip'); // Fügt die Klasse 'flip' zur Karte hinzu (für die Flip-Animation)
   card.addEventListener('animationend', function () {
-    card.classList.remove('flip'); // Entfernt die Klasse 'flip' von der Karte nach Abschluss der Animation
+  card.classList.remove('flip'); // Entfernt die Klasse 'flip' von der Karte nach Abschluss der Animation
   });
 }
-
 function checkWin() {
   if (selectedCard1.dataset.wert === selectedCard2.dataset.wert) {
-    selectedCard1.classList.add('matched');
-    selectedCard2.classList.add('matched');
+    // Überprüft, ob der Wert der ersten ausgewählten Karte dem Wert der zweiten ausgewählten Karte entspricht
+    selectedCard1.classList.add('matched'); // Fügt der ersten ausgewählten Karte die Klasse 'matched' hinzu (für die Match-Animation)
+    selectedCard2.classList.add('matched'); // Fügt der zweiten ausgewählten Karte die Klasse 'matched' hinzu (für die Match-Animation)
+
     if (currentPlayer === 1) {
-      cardsPlayer1.push(selectedCard1.dataset.wert);
-      document.querySelector('#cardsPlayer1').innerHTML = cardsPlayer1.join(", ");
+      // Überprüft, ob der aktuelle Spieler Spieler 1 ist
+      cardsPlayer1.push(selectedCard1.dataset.wert); // Fügt den Wert der ersten ausgewählten Karte dem Array für die Karten des Spielers 1 hinzu
+      document.querySelector('#cardsPlayer1').innerHTML = cardsPlayer1.join(", "); // Aktualisiert den Textinhalt des Elements mit der ID 'cardsPlayer1' mit den Karten des Spielers 1
     } else {
-      cardsPlayer2.push(selectedCard1.dataset.wert);
-      document.querySelector('#cardsPlayer2').innerHTML = cardsPlayer2.join(", ");
+      // Wenn der aktuelle Spieler nicht Spieler 1 ist, wird angenommen, dass es Spieler 2 ist
+      cardsPlayer2.push(selectedCard1.dataset.wert); // Fügt den Wert der ersten ausgewählten Karte dem Array für die Karten des Spielers 2 hinzu
+      document.querySelector('#cardsPlayer2').innerHTML = cardsPlayer2.join(", "); // Aktualisiert den Textinhalt des Elements mit der ID 'cardsPlayer2' mit den Karten des Spielers 2
     }
+
     setTimeout(() => {
-      selectedCard1.classList.add('invisible');
-      selectedCard2.classList.add('invisible');
-      selectedCard1.classList.remove('matched');
-      selectedCard2.classList.remove('matched');
-      selectedCard1 = null;
-      selectedCard2 = null;
-      checkGameEnd();
-    }, 1000);
+      // Verzögerte Ausführung der folgenden Anweisungen nach 1 Sekunde
+      selectedCard1.classList.add('invisible'); // Fügt der ersten ausgewählten Karte die Klasse 'invisible' hinzu (um die Karte auszublenden)
+      selectedCard2.classList.add('invisible'); // Fügt der zweiten ausgewählten Karte die Klasse 'invisible' hinzu (um die Karte auszublenden)
+      selectedCard1.classList.remove('matched'); // Entfernt die Klasse 'matched' von der ersten ausgewählten Karte
+      selectedCard2.classList.remove('matched'); // Entfernt die Klasse 'matched' von der zweiten ausgewählten Karte
+      selectedCard1 = null; // Setzt die erste ausgewählte Karte auf null (um für die nächste Runde zurückgesetzt zu werden)
+      selectedCard2 = null; // Setzt die zweite ausgewählte Karte auf null (um für die nächste Runde zurückgesetzt zu werden)
+      checkGameEnd(); // Überprüft, ob das Spiel beendet ist
+    }, 1000); // Wartezeit von 1 Sekunde (1000 Millisekunden)
   } else {
-    selectedCard1.classList.add('nomatch');
-    selectedCard2.classList.add('nomatch');
+    // Wenn der Wert der ersten ausgewählten Karte nicht dem Wert der zweiten ausgewählten Karte entspricht
+    selectedCard1.classList.add('nomatch'); // Fügt der ersten ausgewählten Karte die Klasse 'nomatch' hinzu (für die No-Match-Animation)
+    selectedCard2.classList.add('nomatch'); // Fügt der zweiten ausgewählten Karte die Klasse 'nomatch' hinzu (für die No-Match-Animation)
+
     setTimeout(() => {
-      selectedCard1.style.backgroundImage = '';
-      selectedCard1.classList.add('back');
-      selectedCard2.style.backgroundImage = '';
-      selectedCard2.classList.add('back');
-      selectedCard1.classList.remove('nomatch');
-      selectedCard2.classList.remove('nomatch');
-      selectedCard1 = null;
-      selectedCard2 = null;
-      switchPlayer();
-    }, 1000);
+      // Verzögerte Ausführung der folgenden Anweisungen nach 1 Sekunde
+      selectedCard1.style.backgroundImage = ''; // Entfernt das Hintergrundbild der ersten ausgewählten Karte (um sie zurückzusetzen)
+      selectedCard1.classList.add('back'); // Fügt der ersten ausgewählten Karte die Klasse 'back' hinzu (um sie umzudrehen)
+      selectedCard2.style.backgroundImage = ''; // Entfernt das Hintergrundbild der zweiten ausgewählten Karte (um sie zurückzusetzen)
+      selectedCard2.classList.add('back'); // Fügt der zweiten ausgewählten Karte die Klasse 'back' hinzu (um sie umzudrehen)
+      selectedCard1.classList.remove('nomatch'); // Entfernt die Klasse 'nomatch' von der ersten ausgewählten Karte
+      selectedCard2.classList.remove('nomatch'); // Entfernt die Klasse 'nomatch' von der zweiten ausgewählten Karte
+      selectedCard1 = null; // Setzt die erste ausgewählte Karte auf null (um für die nächste Runde zurückgesetzt zu werden)
+      selectedCard2 = null; // Setzt die zweite ausgewählte Karte auf null (um für die nächste Runde zurückgesetzt zu werden)
+      switchPlayer(); // Wechselt zum nächsten Spieler
+    }, 1000); // Wartezeit von 1 Sekunde (1000 Millisekunden)
   }
 }
-
 function switchPlayer() {
   if (currentPlayer === 1) {
-    currentPlayer = 2;
+    currentPlayer = 2; // Wechselt den aktuellen Spieler von 1 auf 2
   } else {
-    currentPlayer = 1;
+    currentPlayer = 1; // Wechselt den aktuellen Spieler von 2 auf 1
   }
-  document.querySelector('#currentPlayer').textContent = currentPlayer;
+  document.querySelector('#currentPlayer').textContent = currentPlayer; // Aktualisiert den Textinhalt des Elements mit der ID 'currentPlayer' mit der aktuellen Spielerzahl
 }
-
 function checkGameEnd() {
   if (cardsPlayer1.length + cardsPlayer2.length === anzahlKartenPaare) {
-    clearInterval(timer);
-    let winner = '';
+    // Überprüft, ob die Gesamtanzahl der Karten beider Spieler der Anzahl der Kartenpaare entspricht
+    clearInterval(timer); // Stoppt den Timer
+    let winner = ''; // Variable für den Gewinner
     if (cardsPlayer1.length > cardsPlayer2.length) {
-      winner = 'Spieler 1';
+      winner = 'Spieler 1'; // Setzt den Gewinner auf 'Spieler 1', wenn Spieler 1 mehr Kartenpaare hat
     } else if (cardsPlayer2.length > cardsPlayer1.length) {
-      winner = 'Spieler 2';
+      winner = 'Spieler 2'; // Setzt den Gewinner auf 'Spieler 2', wenn Spieler 2 mehr Kartenpaare hat
     } else {
-      winner = 'Unentschieden';
+      winner = 'Unentschieden'; // Setzt den Gewinner auf 'Unentschieden', wenn beide Spieler die gleiche Anzahl an Kartenpaaren haben
     }
-    const spielzeit = getFormattedTime(timerSeconds);
-    alert(`Spiel beendet! Gewinner: ${winner}. In einer Zeit von ${spielzeit}`);
-    gameEnded = true;
+    const spielzeit = getFormattedTime(timerSeconds); // Ruft die formatierte Spielzeit ab (z.B. "02:30" für 2 Minuten und 30 Sekunden)
+    alert(`Spiel beendet! Gewinner: ${winner}. In einer Zeit von ${spielzeit}`); // Zeigt eine Benachrichtigung mit dem Gewinner und der Spielzeit an
+    gameEnded = true; // Setzt den Spielstatus auf beendet
   }
 }

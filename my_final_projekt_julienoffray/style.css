@@ -1,115 +1,152 @@
+/* Stil für den gesamten Inhalt der Seite */
 body {
+  font-family: 'Open Sans', sans-serif;
   display: grid;
   justify-content: center;
   align-items: center;
-  background-color: rgb(48, 180, 233);
+  background-color: rgb(71, 71, 71);
   margin: 0;
   padding: 0;
-  height: auto;
-  /* Vollständige Höhe des Fensters */
 }
 
+header {
+  background: linear-gradient(to bottom, #080808, #080808e7);
+  padding: 5px;
+  text-align: center;
+}
+.container{ 
+  max-width: 1000px;
+}
+#timer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  color: rgb(255, 255, 255);
+  font-size: 20px;
+  margin-top: 7px;
+}
+
+/* Stil für Überschriften */
 h1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
+  color: white;
+  font-size: 32px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   margin: 0;
-  align-self: stretch;
-  height: auto;
 }
 
+/* Stil für das Rasterlayout der Karten */
 #card-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 5px;
-  width: 100%;
-  /* Vollständige Breite des Gittercontainers */
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: center;
 }
 
+/* Stil für einzelne Karten */
 .card {
+  background: linear-gradient(to bottom, #b4a9f5, #d28efa);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: transform 0.5s ease;
+  background-image: url('coverbild.jpg');
+  margin: 5px;
   background-size: cover;
   background-position: center;
-  background-color: #f2f2f2;
+  background-color: #504f4f;
   border-radius: 5px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   border: 2px solid transparent;
+  font-size: 24px;
+  color: white;
 }
 
+/* Stil für übereinstimmende Karten */
 .card.matched {
   border: 2px solid green;
 }
 
+/* Stil für unsichtbare Karten */
 .card.invisible {
   opacity: 0;
   cursor: default;
 }
 
+/* Stil für nicht übereinstimmende Karten */
 .card.nomatch {
   border: 2px solid red;
 }
 
+/* Stil für Buttons */
 .button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
+  background: linear-gradient(to bottom, #b4a9f5, #d28efa);
+  border-color: #363536;
   padding: 15px 32px;
-  text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 16px;
   margin: 7px 7px;
   cursor: pointer;
+  border-radius: 20px;
+  color: #000000;
+  transform: scale(1);
+  transition: transform 0.3s ease-in-out;
 }
 
+.button:hover {
+  transform: scale(1.2);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Stil für den Spielerbereich */
 .spieler {
-  background-color: #5938e9;
-  color: white;
-  padding: 15px 32px;
-  margin: 4px 2px;
+  color: rgb(255, 255, 255);
+  padding: 10px 22px;
   display: inline-block;
   border-radius: 20px;
 }
 
+/* Stil für den aktuellen Spielstand */
 .aktuell {
-  background-color: #2f32dd;
   color: white;
-  padding: 10px 22px;
-  margin: 20px 2px;
+  padding: 3px;
   text-align: center;
+  border-radius: 20px;
+  margin: 5px;
 }
 
+/* Stil für den Fußbereich */
 footer {
+  margin-top: 10px;
   text-align: center;
 }
 
+/* Stil für Links im Fußbereich */
 footer a {
-  background-color: #000000;
-  color: rgb(245, 242, 242);
+  background-color: #000000dc;
+  color: rgb(247, 247, 247);
   padding: 5px 22px;
   font-size: 13px;
   cursor: pointer;
   text-decoration: none;
+  border-radius: 20px;
 }
 
+footer:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Animationseffekt für das Kartenumdrehen */
 .flip {
   animation: flip-animation 0.5s;
 }
 
+/* Keyframes für den Animationseffekt */
 @keyframes flip-animation {
   from {
     transform: rotateY(0deg);
@@ -120,18 +157,46 @@ footer a {
   }
 }
 
-@media (max-width: 768px) {
+/* Medienabfrage für Bildschirme mit einer Breite von maximal 1549px */
+@media (max-width: 1549px) {
   .card {
-    width: 40px;
-    height: 40px;
+    width: 100px;
+    height: 100px;
+  }
+  .button {
+    background: linear-gradient(to bottom, #b4a9f5, #d28efa);
+    border-color: #363536;
+    padding: 5px 32px;
+    text-decoration: none;
     font-size: 16px;
+    margin: 7px 7px;  
   }
 }
 
-@media (max-width: 568px) {
+/* Medienabfrage für Bildschirme mit einer Breite von maximal 1280px */
+@media (max-width: 1280px) {
   .card {
-    width: 20px;
-    height: 20px;
-    font-size: 8px;
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Medienabfrage für Bildschirme mit einer Breite von maximal 1075px */
+@media (max-width: 1075px) {
+  .card {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* Medienabfrage für Bildschirme mit einer Breite von maximal 611px */
+@media (max-width: 611px) {
+  .card {
+    width: 45px;
+    height: 45px;
+  }
+
+  #timer {
+    font-size: 16px;
   }
 }
